@@ -44,9 +44,13 @@ app.post('/user', function (req, res) {
                 err
             })
         }
+        let data2 = {
+            ...data._doc
+        }
+        delete data2.password;
         return res.json({
             ok: true,
-            user: data
+            user: data2
         })
     });
     // user.save().then(data => res.json({

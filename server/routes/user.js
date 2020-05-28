@@ -12,6 +12,12 @@ app.get('/', (req, res) => {
 
 app.get('/user', verification, (req, res) => {
 
+    let desde = req.query.desde || 0;
+    desde = Number(desde);
+
+    let limite = req.query.limite || 5;
+    limite = Number(limite);
+
 
     // return res.json({
     //     user: req.user
@@ -35,7 +41,7 @@ app.get('/user', verification, (req, res) => {
         })
 
 
-    }).limit(7)  //.skip(desde)
+    }).limit(limite).skip(desde)  //.skip(desde)
 })
 
 app.post('/user', [verification, license], (req, res) => {

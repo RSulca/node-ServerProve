@@ -37,8 +37,8 @@ app.get('/user', verification , (req, res) => {
 
     }).limit(7)  //.skip(desde)
 })
-
-app.post('/user', [ verification, license] ,  (req, res)=> {
+//[ verification, license] ,
+app.post('/user',   (req, res)=> {
     let data = req.body;
     let user = new User({
         ...data

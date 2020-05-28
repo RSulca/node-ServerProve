@@ -10,7 +10,7 @@ app.get('/', (req, res) => {
     res.json('Hello World GAAAAAAAAAAA')
 })
 
-app.get('/user', verification , (req, res) => {
+app.get('/user', verification, (req, res) => {
 
 
     // return res.json({
@@ -37,8 +37,8 @@ app.get('/user', verification , (req, res) => {
 
     }).limit(7)  //.skip(desde)
 })
-//[ verification, license] ,
-app.post('/user',   (req, res)=> {
+
+app.post('/user', [verification, license], (req, res) => {
     let data = req.body;
     let user = new User({
         ...data
@@ -71,7 +71,7 @@ app.post('/user',   (req, res)=> {
     // }));
 })
 
-app.put('/user/:id', [ verification, license] , (req, res)=> {
+app.put('/user/:id', [verification, license], (req, res) => {
     let id = req.params.id;
     let data = req.body;
 
@@ -100,7 +100,7 @@ app.put('/user/:id', [ verification, license] , (req, res)=> {
     })
 })
 
-app.delete('/user/:email', [ verification, license] , (req, res)=> {
+app.delete('/user/:email', [verification, license], (req, res) => {
     let email = req.params.email;
     User.findOneAndUpdate({ email }, { state: false }, { new: true }, (err, data) => {
         if (!data) {

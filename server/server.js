@@ -13,7 +13,8 @@ const bodyParser = require('body-parser')
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.use( require('./routes/user') );
+app.use( require('./routes/index'));
+
 
 app.listen(process.env.PORT, () => {
     console.log(`Started in port ${process.env.PORT}`);

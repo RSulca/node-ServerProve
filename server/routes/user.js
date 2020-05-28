@@ -2,13 +2,22 @@ const express = require('express')
 const app = express()
 const bcrypt = require('bcrypt')
 
-const { modelSchema: User } = require('../models/User');
+const { modelSchema: User } = require('../models/User')
+const { verification, license } = require('../middleware/authorization')
+
 
 app.get('/', (req, res) => {
     res.json('Hello World GAAAAAAAAAAA')
 })
 
-app.get('/user', function (req, res) {
+app.get('/user', verification , (req, res) => {
+
+
+    // return res.json({
+    //     user: req.user
+    // })
+
+
     User.find({ state: true }, 'name email state', (err, data) => {
         if (err) {
             return res.status(400).json({
@@ -29,7 +38,7 @@ app.get('/user', function (req, res) {
     }).limit(7)  //.skip(desde)
 })
 
-app.post('/user', function (req, res) {
+app.post('/user', [ verification, license] ,  (req, res)=> {
     let data = req.body;
     let user = new User({
         ...data
@@ -62,14 +71,14 @@ app.post('/user', function (req, res) {
     // }));
 })
 
-app.put('/user/:id', function (req, res) {
+app.put('/user/:id', [ verification, license] , (req, res)=> {
     let id = req.params.id;
     let data = req.body;
 
     delete data.password;
     delete data.google;
     delete data.email;
-    //You can use underscore for pick only that you need anf for many data
+    //You can use underscore for pick only that you need and for many data
 
     User.findByIdAndUpdate(id, data, { new: true, runValidators: true }, (err, data) => {
         if (err) {
@@ -78,14 +87,20 @@ app.put('/user/:id', function (req, res) {
                 err
             })
         }
+
+        let data2 = {
+            ...data._doc
+        }
+        delete data2.password;
+
         return res.json({
             ok: true,
-            user: data
+            user: data2
         })
     })
 })
 
-app.delete('/user/:email', function (req, res) {
+app.delete('/user/:email', [ verification, license] , (req, res)=> {
     let email = req.params.email;
     User.findOneAndUpdate({ email }, { state: false }, { new: true }, (err, data) => {
         if (!data) {

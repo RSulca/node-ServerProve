@@ -5,7 +5,7 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 //CADUCIDAD TOKEN
-process.env.END_TOKEN = 60 * 60 * 24 * 60;
+process.env.END_TOKEN = 60 * 60 * 24 * 30;
 
 //SEED PROJECT
 process.env.SEED = process.env.SEED || 'seed-project';
@@ -19,3 +19,6 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 process.env.URLDB = urlDB;
+
+//CLIENT ID
+process.env.CLIENT_ID = process.env.CLIENT_ID || "930256584559-saqjihob312aqst2e4d072mpdt16j0nv.apps.googleusercontent.com";

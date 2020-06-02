@@ -6,9 +6,9 @@ const { modelSchema: User } = require('../models/User')
 const { verification, license } = require('../middleware/authorization')
 
 
-app.get('/', (req, res) => {
-    res.json('Hello World GAAAAAAAAAAA')
-})
+// app.get('/', (req, res) => {
+//     res.json('Hello World GAAAAAAAAAAA')
+// })
 
 app.get('/user', verification, (req, res) => {
 

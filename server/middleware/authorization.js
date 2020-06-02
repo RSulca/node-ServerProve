@@ -14,6 +14,20 @@ let verification = (req, res, next) => {
     })
 }
 
+let urlTokenImg = (req, res, next) => {
+    let token = req.query.token;
+    jwt.verify(token, process.env.SEED, (err, data) => {
+        if (err) {
+            return res.status(401).json({
+                ok: false,
+                err: err.name
+            })
+        }
+        req.user = data.user;
+        next();
+    })
+}
+
 let license = (req, res, next) => {
     let token = req.get('token');
     jwt.verify(token, process.env.SEED, (err, data) => {
@@ -31,5 +45,6 @@ let license = (req, res, next) => {
 
 module.exports = {
     verification,
-    license
+    license,
+    urlTokenImg
 }
